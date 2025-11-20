@@ -1,0 +1,68 @@
+# Default values for TMF673 GeographicAddress ODA Component
+# This is a YAML-formatted file.
+
+# Component identification
+component:
+  id: "TMFC023"
+  name: "geographicaddress"
+  type: "corecommerce"
+  version: "4.0.1"
+  functionalBlock: "CoreCommerce"
+
+# Geographic Address API configuration
+geographicaddress:
+  image:
+    repository: solsurfer/tmf673-geographicaddress
+    tag: "4.0.1-improved"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: 8080
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+  replicas: 1
+
+# MongoDB configuration
+mongodb:
+  image:
+    repository: mongo
+    tag: "8.0"
+    pullPolicy: IfNotPresent
+
+  service:
+    type: ClusterIP
+    port: 27017
+
+  persistence:
+    enabled: true
+    size: 5Gi
+    storageClass: ""
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+  startupProbe:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 5
+    timeoutSeconds: 5
+    failureThreshold: 30
+
+# ODA Canvas settings
+oda:
+  canvas:
+    role: "canvas-system"

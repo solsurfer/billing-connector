@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-geographicaddress
+  labels:
+    app: {{ .Release.Name }}-geographicaddress
+    oda.tmforum.org/componentName: {{ .Values.component.name }}
+    version: {{ .Values.component.version }}
+spec:
+  replicas: {{ .Values.geographicaddress.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-geographicaddress
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-geographicaddress
+        oda.tmforum.org/componentName: {{ .Values.component.name }}
+        version: {{ .Values.component.version }}
+    spec:
+      containers:
+      - name: geographicaddress
+        image: "{{ .Values.geographicaddress.image.repository }}:{{ .Values.geographicaddress.image.tag }}"
+        imagePullPolicy: {{ .Values.geographicaddress.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.geographicaddress.service.targetPort }}
+          name: http
+          protocol: TCP
+        env:
+        - name: COMPONENT_NAME
+          value: {{ .Values.component.name }}
+        - name: RELEASE_NAME
+          value: {{ .Release.Name }}
+        - name: MONGO_URL
+          value: "mongodb://{{ .Release.Name }}-mongodb:27017/tmf"
+        resources:
+          {{- toYaml .Values.geographicaddress.resources | nindent 10 }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3

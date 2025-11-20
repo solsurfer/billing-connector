@@ -1,0 +1,33 @@
+TMF673 Geographic Address Management API has been deployed!
+
+Release Name: {{ .Release.Name }}
+Component Name: {{ .Values.component.name }}
+Version: {{ .Values.component.version }}
+
+To verify the deployment:
+
+1. Check component status:
+   kubectl get components {{ .Release.Name }}-{{ .Values.component.name }} -n {{ .Release.Namespace }}
+
+2. Check exposed APIs:
+   kubectl get exposedapis -n {{ .Release.Namespace }}
+
+3. Check pods:
+   kubectl get pods -l oda.tmforum.org/componentName={{ .Values.component.name }} -n {{ .Release.Namespace }}
+
+4. Get service details:
+   kubectl get svc {{ .Release.Name }}-geographicaddress -n {{ .Release.Namespace }}
+
+To access the API:
+
+1. Port forward to the service:
+   kubectl port-forward svc/{{ .Release.Name }}-geographicaddress {{ .Values.geographicaddress.service.port }}:{{ .Values.geographicaddress.service.port }} -n {{ .Release.Namespace }}
+
+2. Access Swagger UI:
+   http://localhost:{{ .Values.geographicaddress.service.port }}/tmf-api/geographicAddressManagement/v4/docs
+
+3. Access API entrypoint:
+   http://localhost:{{ .Values.geographicaddress.service.port }}/
+
+To view logs:
+   kubectl logs -l app={{ .Release.Name }}-geographicaddress -n {{ .Release.Namespace }} --tail=100 -f

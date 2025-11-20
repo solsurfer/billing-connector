@@ -1,0 +1,14 @@
+apiVersion: v1
+name: tmf673-geographicaddress
+version: 4.0.1
+description: TMF673 Geographic Address Management API - ODA Component
+appVersion: "4.0.1"
+keywords:
+  - tmforum
+  - oda
+  - geographic-address
+  - tmf673
+maintainers:
+  - name: ODA Component Developer
+sources:
+  - https://github.com/tmforum-apis/TMF673_GeographicAddress

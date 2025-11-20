@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-geographicaddress
+  labels:
+    app: {{ .Release.Name }}-geographicaddress
+    oda.tmforum.org/componentName: {{ .Values.component.name }}
+spec:
+  type: {{ .Values.geographicaddress.service.type }}
+  ports:
+  - port: {{ .Values.geographicaddress.service.port }}
+    targetPort: {{ .Values.geographicaddress.service.targetPort }}
+    protocol: TCP
+    name: http
+  selector:
+    app: {{ .Release.Name }}-geographicaddress

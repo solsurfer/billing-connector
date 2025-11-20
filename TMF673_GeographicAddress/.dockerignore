@@ -1,0 +1,21 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+.DS_Store
+*.md
+.env
+.env.local
+.vscode
+.idea
+helm-charts
+*.tar.gz
+docker-compose.yaml
+.dockerignore
+
+# Winston log files
+error.log
+combined.log
+exceptions.log
+rejections.log
+*.log

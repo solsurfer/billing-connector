@@ -1,0 +1,2528 @@
+---
+swagger: "2.0"
+info:
+  description: "## TMF API Reference : TMF 673 - Place - Geographic Address Management\n\
+    ### Release : 19.5 - January 2020\n\nThe Geographic Address API provides a standardized\
+    \ client interface to an Address management system.\nIt allows looking for worldwide\
+    \ addresses.\nIt can also be used to validate geographic address data, to be sure\
+    \ that it corresponds to a real address.\n\n### Resources\n- GeographicAddress\n\
+    - GeographicSubAddress\n- GeographicAddressValidation\n- Hub\n\n### Operations\n\
+    Geographic Address Management API performs the following operations :\n- Retrieve\
+    \ a geographic address or a collection of geographic addresses\n- Retrieve a geographic\
+    \ sub-address\n- Create a geographic address validation\n- Retrieve, update and\
+    \ delete an existing  geographic address validation\n- Notify events on these\
+    \ resources"
+  version: "4.0.1"
+  title: "API Place - GeographicAddress"
+host: "serverRoot:8080"
+basePath: "/tmf-api/geographicAddressManagement/v4/"
+tags:
+- name: "geographicAddressValidation"
+- name: "geographicAddress"
+- name: "geographicSubAddress"
+- name: "notification listeners (client side)"
+- name: "events subscription"
+schemes:
+- "https"
+consumes:
+- "application/json;charset=utf-8"
+produces:
+- "application/json;charset=utf-8"
+paths:
+  /geographicAddressValidation:
+    get:
+      tags:
+      - "geographicAddressValidation"
+      summary: "List or find GeographicAddressValidation objects"
+      description: "This operation list or find GeographicAddressValidation entities"
+      operationId: "listGeographicAddressValidation"
+      parameters:
+      - name: "fields"
+        in: "query"
+        description: "Comma-separated properties to be provided in response"
+        required: false
+        type: "string"
+      - name: "offset"
+        in: "query"
+        description: "Requested index for start of resources to be provided in response"
+        required: false
+        type: "integer"
+      - name: "limit"
+        in: "query"
+        description: "Requested number of resources to be provided in response"
+        required: false
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          headers:
+            X-Result-Count:
+              type: "integer"
+              description: "Actual number of items returned in the response body"
+            X-Total-Count:
+              type: "integer"
+              description: "Total number of items matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GeographicAddressValidation"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "GeographicAddressValidation"
+    post:
+      tags:
+      - "geographicAddressValidation"
+      summary: "Creates a GeographicAddressValidation"
+      description: "This operation creates a GeographicAddressValidation entity."
+      operationId: "createGeographicAddressValidation"
+      parameters:
+      - in: "body"
+        name: "geographicAddressValidation"
+        description: "The GeographicAddressValidation to be created"
+        required: true
+        schema:
+          $ref: "#/definitions/GeographicAddressValidation_Create"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/GeographicAddressValidation"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "GeographicAddressValidation"
+  /geographicAddressValidation/{id}:
+    get:
+      tags:
+      - "geographicAddressValidation"
+      summary: "Retrieves a GeographicAddressValidation by ID"
+      description: "This operation retrieves a GeographicAddressValidation entity.\
+        \ Attribute selection is enabled for all first level attributes."
+      operationId: "retrieveGeographicAddressValidation"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Identifier of the GeographicAddressValidation"
+        required: true
+        type: "string"
+      - name: "fields"
+        in: "query"
+        description: "Comma-separated properties to provide in response"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/GeographicAddressValidation"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "GeographicAddressValidation"
+    patch:
+      tags:
+      - "geographicAddressValidation"
+      summary: "Updates partially a GeographicAddressValidation"
+      description: "This operation updates partially a GeographicAddressValidation\
+        \ entity."
+      operationId: "patchGeographicAddressValidation"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Identifier of the GeographicAddressValidation"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "geographicAddressValidation"
+        description: "The GeographicAddressValidation to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/GeographicAddressValidation_Update"
+      responses:
+        200:
+          description: "Updated"
+          schema:
+            $ref: "#/definitions/GeographicAddressValidation"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "GeographicAddressValidation"
+  /geographicAddress:
+    get:
+      tags:
+      - "geographicAddress"
+      summary: "List or find GeographicAddress objects"
+      description: "This operation list or find GeographicAddress entities"
+      operationId: "listGeographicAddress"
+      parameters:
+      - name: "fields"
+        in: "query"
+        description: "Comma-separated properties to be provided in response"
+        required: false
+        type: "string"
+      - name: "offset"
+        in: "query"
+        description: "Requested index for start of resources to be provided in response"
+        required: false
+        type: "integer"
+      - name: "limit"
+        in: "query"
+        description: "Requested number of resources to be provided in response"
+        required: false
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          headers:
+            X-Result-Count:
+              type: "integer"
+              description: "Actual number of items returned in the response body"
+            X-Total-Count:
+              type: "integer"
+              description: "Total number of items matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GeographicAddress"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "GeographicAddress"
+  /geographicAddress/{id}:
+    get:
+      tags:
+      - "geographicAddress"
+      summary: "Retrieves a GeographicAddress by ID"
+      description: "This operation retrieves a GeographicAddress entity. Attribute\
+        \ selection is enabled for all first level attributes."
+      operationId: "retrieveGeographicAddress"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Identifier of the GeographicAddress"
+        required: true
+        type: "string"
+      - name: "fields"
+        in: "query"
+        description: "Comma-separated properties to provide in response"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/GeographicAddress"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "GeographicAddress"
+  /geographicAddress/{geographicAddressId}/geographicSubAddress:
+    get:
+      tags:
+      - "geographicSubAddress"
+      summary: "List or find GeographicSubAddress objects"
+      description: "This operation list or find GeographicSubAddress entities"
+      operationId: "listGeographicSubAddress"
+      parameters:
+      - name: "geographicAddressId"
+        in: "path"
+        description: "Identifier of the parent GeographicAddress entity"
+        required: true
+        type: "string"
+      - name: "fields"
+        in: "query"
+        description: "Comma-separated properties to be provided in response"
+        required: false
+        type: "string"
+      - name: "offset"
+        in: "query"
+        description: "Requested index for start of resources to be provided in response"
+        required: false
+        type: "integer"
+      - name: "limit"
+        in: "query"
+        description: "Requested number of resources to be provided in response"
+        required: false
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          headers:
+            X-Result-Count:
+              type: "integer"
+              description: "Actual number of items returned in the response body"
+            X-Total-Count:
+              type: "integer"
+              description: "Total number of items matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GeographicSubAddress"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "GeographicSubAddress"
+  /geographicAddress/{geographicAddressId}/geographicSubAddress/{id}:
+    get:
+      tags:
+      - "geographicSubAddress"
+      summary: "Retrieves a GeographicSubAddress by ID"
+      description: "This operation retrieves a GeographicSubAddress entity. Attribute\
+        \ selection is enabled for all first level attributes."
+      operationId: "retrieveGeographicSubAddress"
+      parameters:
+      - name: "geographicAddressId"
+        in: "path"
+        description: "Identifier of the parent GeographicAddress entity"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "Identifier of the GeographicSubAddress"
+        required: true
+        type: "string"
+      - name: "fields"
+        in: "query"
+        description: "Comma-separated properties to provide in response"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/GeographicSubAddress"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "GeographicSubAddress"
+  /hub:
+    post:
+      tags:
+      - "events subscription"
+      summary: "Register a listener"
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: "registerListener"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: "Data containing the callback endpoint to deliver the information"
+        required: true
+        schema:
+          $ref: "#/definitions/EventSubscriptionInput"
+      responses:
+        201:
+          description: "Subscribed"
+          schema:
+            $ref: "#/definitions/EventSubscription"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "EventsSubscription"
+  /hub/{id}:
+    delete:
+      tags:
+      - "events subscription"
+      summary: "Unregister a listener"
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: "unregisterListener"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id of the registered listener"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Deleted"
+        400:
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "EventsSubscription"
+  /listener/geographicAddressValidationStateChangeEvent:
+    post:
+      tags:
+      - "notification listeners (client side)"
+      summary: "Client listener for entity GeographicAddressValidationStateChangeEvent"
+      description: "Example of a client listener for receiving the notification GeographicAddressValidationStateChangeEvent"
+      operationId: "listenToGeographicAddressValidationStateChangeEvent"
+      parameters:
+      - in: "body"
+        name: "data"
+        description: "The event data"
+        required: true
+        schema:
+          $ref: "#/definitions/GeographicAddressValidationStateChangeEvent"
+      responses:
+        201:
+          description: "Notified"
+          schema:
+            $ref: "#/definitions/EventSubscription"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Unauthorized"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not Found"
+          schema:
+            $ref: "#/definitions/Error"
+        405:
+          description: "Method Not allowed"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Conflict"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "NotificationListenersClientSide"
+definitions:
+  Addressable:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "unique identifier"
+      href:
+        type: "string"
+        description: "Hyperlink reference"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "Base schema for adressable entities"
+  EntityRef:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+        description: "unique identifier"
+      href:
+        type: "string"
+        description: "Hyperlink reference"
+      name:
+        type: "string"
+        description: "Name of the related entity."
+      '@baseType':
+        type: "string"
+        example: "ResourceSpecification"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        example: "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        example: "LogicalResourceSpecification"
+        description: "When sub-classing, this defines the sub-class Extensible name"
+      '@referredType':
+        type: "string"
+        description: "The actual type of the target instance when needed for disambiguation."
+    description: "Entity reference schema to be use for all entityRef class."
+  Extensible:
+    type: "object"
+    properties:
+      '@baseType':
+        type: "string"
+        example: "ResourceSpecification"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        example: "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        example: "LogicalResourceSpecification"
+        description: "When sub-classing, this defines the sub-class Extensible name"
+    description: "Base Extensible schema for use in TMForum Open-APIs"
+  GeographicAddress:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the place"
+      href:
+        type: "string"
+        description: "Unique reference of the place"
+      city:
+        type: "string"
+        description: "City that the address is in"
+      country:
+        type: "string"
+        description: "Country that the address is in"
+      locality:
+        type: "string"
+        description: "An area of defined or undefined boundaries within a local authority\
+          \ or other legislatively defined area, usually rural or semi rural in nature.\
+          \ [ANZLIC-STREET], or a suburb, a bounded locality within a city, town or\
+          \ shire principally of urban character [ANZLICSTREET]"
+      name:
+        type: "string"
+        description: "A user-friendly name for the place, such as [Paris Store], [London\
+          \ Store], [Main Home]"
+      postcode:
+        type: "string"
+        description: "descriptor for a postal delivery area, used to speed and simplify\
+          \ the delivery of mail (also know as zipcode)"
+      stateOrProvince:
+        type: "string"
+        description: "the State or Province that the address is in"
+      streetName:
+        type: "string"
+        description: "Name of the street or other street type"
+      streetNr:
+        type: "string"
+        description: "Number identifying a specific property on a public street. It\
+          \ may be combined with streetNrLast for ranged addresses"
+      streetNrLast:
+        type: "string"
+        description: "Last number in a range of street numbers allocated to a property"
+      streetNrLastSuffix:
+        type: "string"
+        description: "Last street number suffix for a ranged address"
+      streetNrSuffix:
+        type: "string"
+        description: "the first street number suffix"
+      streetSuffix:
+        type: "string"
+        description: "A modifier denoting a relative direction"
+      streetType:
+        type: "string"
+        description: "alley, avenue, boulevard, brae, crescent, drive, highway, lane,\
+          \ terrace, parade, place, tarn, way, wharf "
+      geographicLocation:
+        $ref: "#/definitions/GeographicLocationRefOrValue"
+      geographicSubAddress:
+        type: "array"
+        items:
+          $ref: "#/definitions/GeographicSubAddress"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "Structured textual way of describing how to find a Property in an\
+      \ urban area (country properties are often defined differently).\nNote : Address\
+      \ corresponds to SID UrbanPropertyAddress"
+    example:
+      country: "country"
+      streetType: "streetType"
+      geographicLocation:
+        '@referredType': "@referredType"
+        '@baseType': "ResourceSpecification"
+        '@type': "GeoJsonPoint"
+        bbox:
+        - 0.80082819046101150206595775671303272247314453125
+        - 0.80082819046101150206595775671303272247314453125
+        name: "name"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+      city: "city"
+      streetNr: "streetNr"
+      '@type': "@type"
+      locality: "locality"
+      postcode: "postcode"
+      streetNrLast: "streetNrLast"
+      streetNrSuffix: "streetNrSuffix"
+      streetName: "streetName"
+      stateOrProvince: "stateOrProvince"
+      '@baseType': "@baseType"
+      name: "name"
+      streetNrLastSuffix: "streetNrLastSuffix"
+      streetSuffix: "streetSuffix"
+      geographicSubAddress:
+      - subUnitNumber: "subUnitNumber"
+        '@type': "@type"
+        buildingName: "buildingName"
+        '@baseType': "@baseType"
+        levelType: "levelType"
+        subUnitType: "subUnitType"
+        levelNumber: "levelNumber"
+        name: "name"
+        subAddressType: "subAddressType"
+        id: "id"
+        href: "href"
+        privateStreetNumber: "privateStreetNumber"
+        '@schemaLocation': "http://example.com/aeiou"
+        privateStreetName: "privateStreetName"
+      - subUnitNumber: "subUnitNumber"
+        '@type': "@type"
+        buildingName: "buildingName"
+        '@baseType': "@baseType"
+        levelType: "levelType"
+        subUnitType: "subUnitType"
+        levelNumber: "levelNumber"
+        name: "name"
+        subAddressType: "subAddressType"
+        id: "id"
+        href: "href"
+        privateStreetNumber: "privateStreetNumber"
+        '@schemaLocation': "http://example.com/aeiou"
+        privateStreetName: "privateStreetName"
+      id: "id"
+      href: "href"
+      '@schemaLocation': "http://example.com/aeiou"
+  GeographicAddressValidation:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the Address Validation"
+      href:
+        type: "string"
+        description: "An URI used to access to the address validation resource"
+      provideAlternative:
+        type: "boolean"
+        description: "Indicator provided by the requester to specify if alternate\
+          \ addresses must be provided in case of partial or fail result."
+      validationDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when the address validation is performed"
+      validationResult:
+        type: "string"
+        description: "Result of the address validation (success, partial, fails)"
+      alternateGeographicAddress:
+        type: "array"
+        items:
+          $ref: "#/definitions/GeographicAddress"
+      state:
+        $ref: "#/definitions/TaskStateType"
+      submittedGeographicAddress:
+        description: "the address as submitted to validation"
+        $ref: "#/definitions/GeographicAddress"
+      validGeographicAddress:
+        description: "the correct form of the validated address in case of validation\
+          \ success"
+        $ref: "#/definitions/GeographicAddress"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "This resource is used to manage address validation request and response"
+    example:
+      validationResult: "validationResult"
+      '@baseType': "@baseType"
+      alternateGeographicAddress:
+      - country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      - country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      '@type': "@type"
+      validGeographicAddress:
+        country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      provideAlternative: true
+      submittedGeographicAddress:
+        country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      id: "id"
+      href: "href"
+      validationDate: "2000-01-23T04:56:07.000+00:00"
+      state: {}
+      '@schemaLocation': "http://example.com/aeiou"
+  GeographicAddressValidation_Create:
+    type: "object"
+    required:
+    - "provideAlternative"
+    - "submittedGeographicAddress"
+    properties:
+      provideAlternative:
+        type: "boolean"
+        description: "Indicator provided by the requester to specify if alternate\
+          \ addresses must be provided in case of partial or fail result."
+      submittedGeographicAddress:
+        description: "the address as submitted to validation"
+        $ref: "#/definitions/GeographicAddress"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "This resource is used to manage address validation request and response\n\
+      Skipped properties: id,href,alternateGeographicAddress,validGeographicAddress,state,validationResult,validationDate"
+    example:
+      '@baseType': "@baseType"
+      '@type': "@type"
+      provideAlternative: true
+      submittedGeographicAddress:
+        country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      '@schemaLocation': "http://example.com/aeiou"
+  GeographicAddressValidation_Update:
+    type: "object"
+    properties:
+      provideAlternative:
+        type: "boolean"
+        description: "Indicator provided by the requester to specify if alternate\
+          \ addresses must be provided in case of partial or fail result."
+      validationDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when the address validation is performed"
+      validationResult:
+        type: "string"
+        description: "Result of the address validation (success, partial, fails)"
+      alternateGeographicAddress:
+        type: "array"
+        items:
+          $ref: "#/definitions/GeographicAddress"
+      state:
+        $ref: "#/definitions/TaskStateType"
+      submittedGeographicAddress:
+        description: "the address as submitted to validation"
+        $ref: "#/definitions/GeographicAddress"
+      validGeographicAddress:
+        description: "the correct form of the validated address in case of validation\
+          \ success"
+        $ref: "#/definitions/GeographicAddress"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "This resource is used to manage address validation request and response\n\
+      Skipped properties: id,href"
+    example:
+      validationResult: "validationResult"
+      '@baseType': "@baseType"
+      alternateGeographicAddress:
+      - country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      - country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      '@type': "@type"
+      validGeographicAddress:
+        country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      provideAlternative: true
+      submittedGeographicAddress:
+        country: "country"
+        streetType: "streetType"
+        geographicLocation:
+          '@referredType': "@referredType"
+          '@baseType': "ResourceSpecification"
+          '@type': "GeoJsonPoint"
+          bbox:
+          - 0.80082819046101150206595775671303272247314453125
+          - 0.80082819046101150206595775671303272247314453125
+          name: "name"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        city: "city"
+        streetNr: "streetNr"
+        '@type': "@type"
+        locality: "locality"
+        postcode: "postcode"
+        streetNrLast: "streetNrLast"
+        streetNrSuffix: "streetNrSuffix"
+        streetName: "streetName"
+        stateOrProvince: "stateOrProvince"
+        '@baseType': "@baseType"
+        name: "name"
+        streetNrLastSuffix: "streetNrLastSuffix"
+        streetSuffix: "streetSuffix"
+        geographicSubAddress:
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        - subUnitNumber: "subUnitNumber"
+          '@type': "@type"
+          buildingName: "buildingName"
+          '@baseType': "@baseType"
+          levelType: "levelType"
+          subUnitType: "subUnitType"
+          levelNumber: "levelNumber"
+          name: "name"
+          subAddressType: "subAddressType"
+          id: "id"
+          href: "href"
+          privateStreetNumber: "privateStreetNumber"
+          '@schemaLocation': "http://example.com/aeiou"
+          privateStreetName: "privateStreetName"
+        id: "id"
+        href: "href"
+        '@schemaLocation': "http://example.com/aeiou"
+      validationDate: "2000-01-23T04:56:07.000+00:00"
+      state: {}
+      '@schemaLocation': "http://example.com/aeiou"
+  GeographicLocation:
+    type: "object"
+    required:
+    - "@type"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the geographic location"
+      href:
+        type: "string"
+        description: "An URI used to access to the geographic location resource"
+      '@type':
+        type: "string"
+        description: "The name of the GeoJSON structure used in the geometry attribute"
+        enum:
+        - "GeoJsonPoint"
+        - "GeoJsonMultiPoint"
+        - "GeoJsonLineString"
+        - "GeoJsonMultiLineString"
+        - "GeoJsonPolygon"
+      bbox:
+        type: "array"
+        description: "A bounding box array that contains the geometry. The axes order\
+          \ follows the axes order of the geometry"
+        items:
+          type: "number"
+    description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+      \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+      \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+      \ tracts of land). Use the @type attribute to specify which of these is being\
+      \ specified by the geometry attribute."
+  GeographicLocationRef:
+    type: "object"
+    required:
+    - "id"
+    properties:
+      id:
+        type: "string"
+        description: "unique identifier"
+      href:
+        type: "string"
+        description: "Hyperlink reference"
+      name:
+        type: "string"
+        description: "Name of the related entity."
+      '@baseType':
+        type: "string"
+        example: "ResourceSpecification"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        example: "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        example: "LogicalResourceSpecification"
+        description: "When sub-classing, this defines the sub-class Extensible name"
+      '@referredType':
+        type: "string"
+        description: "The actual type of the target instance when needed for disambiguation."
+  GeographicLocationRefOrValue:
+    type: "object"
+    required:
+    - "@type"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the place"
+      href:
+        type: "string"
+        description: "Unique reference of the place"
+      name:
+        type: "string"
+        description: "A user-friendly name for the place, such as [Paris Store], [London\
+          \ Store], [Main Home]"
+      '@baseType':
+        type: "string"
+        example: "ResourceSpecification"
+        description: "When sub-classing, this defines the super-class"
+      bbox:
+        type: "array"
+        description: "A bounding box array that contains the geometry. The axes order\
+          \ follows the axes order of the geometry"
+        items:
+          type: "number"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        example: "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "The name of the GeoJSON structure used in the geometry attribute"
+        enum:
+        - "GeoJsonPoint"
+        - "GeoJsonMultiPoint"
+        - "GeoJsonLineString"
+        - "GeoJsonMultiLineString"
+        - "GeoJsonPolygon"
+      '@referredType':
+        type: "string"
+        description: "The actual type of the target instance when needed for disambiguation."
+    description: "A GeographicLocation is a pure-virtual super-class to the GeoJSON-aligned\
+      \ geometries of Point (addresses and locations), MultiPoint, LineString (streets,\
+      \ highways and boundaries), MultiLineString and Polygon (countries, provinces,\
+      \ tracts of land). Use the @type attribute to specify which of these is being\
+      \ specified by the geometry attribute."
+    example:
+      '@referredType': "@referredType"
+      '@baseType': "ResourceSpecification"
+      '@type': "GeoJsonPoint"
+      bbox:
+      - 0.80082819046101150206595775671303272247314453125
+      - 0.80082819046101150206595775671303272247314453125
+      name: "name"
+      id: "id"
+      href: "href"
+      '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+  GeographicSubAddress:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique Identifier of the subAddress"
+      href:
+        type: "string"
+        description: "Link to the subAddress"
+      buildingName:
+        type: "string"
+        description: "allows for buildings that have well-known names"
+      levelNumber:
+        type: "string"
+        description: "used where a level type may be repeated e.g. BASEMENT 1, BASEMENT\
+          \ 2"
+      levelType:
+        type: "string"
+        description: "describes level types within a building"
+      name:
+        type: "string"
+        description: "Name of the subAddress to identify it with a meaningful identification"
+      privateStreetName:
+        type: "string"
+        description: "private streets internal to a property (e.g. a university) may\
+          \ have internal names that are not recorded by the land title office."
+      privateStreetNumber:
+        type: "string"
+        description: "private streets numbers internal to a private street"
+      subAddressType:
+        type: "string"
+        description: "Type of subAddress : it can be a subunit or a private street"
+      subUnitNumber:
+        type: "string"
+        description: "the discriminator used for the subunit\noften just a simple\
+          \ number e.g. FLAT 5, may also be a range"
+      subUnitType:
+        type: "string"
+        description: "the type of subunit\ne.g.BERTH, FLAT, PIER, SUITE, SHOP, TOWER,\
+          \ UNIT, WHARF"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "Representation of a GeographicSubAddress \nIt is used for addressing\
+      \ within a property in an urban area (country properties are often defined differently).\
+      \ It may refer to a building, a building cluster, or a floor of a multistory\
+      \ building."
+    example:
+      subUnitNumber: "subUnitNumber"
+      '@type': "@type"
+      buildingName: "buildingName"
+      '@baseType': "@baseType"
+      levelType: "levelType"
+      subUnitType: "subUnitType"
+      levelNumber: "levelNumber"
+      name: "name"
+      subAddressType: "subAddressType"
+      id: "id"
+      href: "href"
+      privateStreetNumber: "privateStreetNumber"
+      '@schemaLocation': "http://example.com/aeiou"
+      privateStreetName: "privateStreetName"
+  Place:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the place"
+      href:
+        type: "string"
+        description: "Unique reference of the place"
+      name:
+        type: "string"
+        description: "A user-friendly name for the place, such as [Paris Store], [London\
+          \ Store], [Main Home]"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "Place reference. Place defines the places where the products are\
+      \ sold or delivered."
+  TaskStateType:
+    type: "string"
+    description: "Possible values for the state of a task"
+    enum:
+    - "accepted"
+    - "terminatedWithError"
+    - "inProgress"
+    - "done"
+  EventSubscription:
+    type: "object"
+    required:
+    - "callback"
+    - "id"
+    properties:
+      id:
+        type: "string"
+        description: "Id of the listener"
+      callback:
+        type: "string"
+        description: "The callback being registered."
+      query:
+        type: "string"
+        description: "additional data to be passed"
+    description: "Sets the communication endpoint address the service instance must\
+      \ use to deliver notification information"
+    example:
+      query: "query"
+      callback: "callback"
+      id: "id"
+  EventSubscriptionInput:
+    type: "object"
+    required:
+    - "callback"
+    properties:
+      callback:
+        type: "string"
+        description: "The callback being registered."
+      query:
+        type: "string"
+        description: "additional data to be passed"
+    description: "Sets the communication endpoint address the service instance must\
+      \ use to deliver notification information"
+    example:
+      query: "query"
+      callback: "callback"
+  GeographicAddressValidationStateChangeEvent:
+    type: "object"
+    properties:
+      event:
+        description: "The event payload linked to the involved resource object"
+        $ref: "#/definitions/GeographicAddressValidationStateChangeEventPayload"
+      eventId:
+        type: "string"
+        description: "The identifier of the notification."
+      eventTime:
+        type: "string"
+        format: "date-time"
+        description: "Time of the event occurrence."
+      eventType:
+        type: "string"
+        description: "The type of the notification."
+      correlationId:
+        type: "string"
+        description: "The correlation id for this event."
+      domain:
+        type: "string"
+        description: "The domain of the event."
+      title:
+        type: "string"
+        description: "The title of the event."
+      description:
+        type: "string"
+        description: "An explnatory of the event."
+      priority:
+        type: "string"
+        description: "A priority."
+      timeOcurred:
+        type: "string"
+        format: "date-time"
+        description: "The time the event occured."
+    description: "The notification data structure"
+    example:
+      eventId: "eventId"
+      domain: "domain"
+      eventTime: "2000-01-23T04:56:07.000+00:00"
+      description: "description"
+      correlationId: "correlationId"
+      eventType: "eventType"
+      event:
+        geographicAddressValidation:
+          validationResult: "validationResult"
+          '@baseType': "@baseType"
+          alternateGeographicAddress:
+          - country: "country"
+            streetType: "streetType"
+            geographicLocation:
+              '@referredType': "@referredType"
+              '@baseType': "ResourceSpecification"
+              '@type': "GeoJsonPoint"
+              bbox:
+              - 0.80082819046101150206595775671303272247314453125
+              - 0.80082819046101150206595775671303272247314453125
+              name: "name"
+              id: "id"
+              href: "href"
+              '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+            city: "city"
+            streetNr: "streetNr"
+            '@type': "@type"
+            locality: "locality"
+            postcode: "postcode"
+            streetNrLast: "streetNrLast"
+            streetNrSuffix: "streetNrSuffix"
+            streetName: "streetName"
+            stateOrProvince: "stateOrProvince"
+            '@baseType': "@baseType"
+            name: "name"
+            streetNrLastSuffix: "streetNrLastSuffix"
+            streetSuffix: "streetSuffix"
+            geographicSubAddress:
+            - subUnitNumber: "subUnitNumber"
+              '@type': "@type"
+              buildingName: "buildingName"
+              '@baseType': "@baseType"
+              levelType: "levelType"
+              subUnitType: "subUnitType"
+              levelNumber: "levelNumber"
+              name: "name"
+              subAddressType: "subAddressType"
+              id: "id"
+              href: "href"
+              privateStreetNumber: "privateStreetNumber"
+              '@schemaLocation': "http://example.com/aeiou"
+              privateStreetName: "privateStreetName"
+            - subUnitNumber: "subUnitNumber"
+              '@type': "@type"
+              buildingName: "buildingName"
+              '@baseType': "@baseType"
+              levelType: "levelType"
+              subUnitType: "subUnitType"
+              levelNumber: "levelNumber"
+              name: "name"
+              subAddressType: "subAddressType"
+              id: "id"
+              href: "href"
+              privateStreetNumber: "privateStreetNumber"
+              '@schemaLocation': "http://example.com/aeiou"
+              privateStreetName: "privateStreetName"
+            id: "id"
+            href: "href"
+            '@schemaLocation': "http://example.com/aeiou"
+          - country: "country"
+            streetType: "streetType"
+            geographicLocation:
+              '@referredType': "@referredType"
+              '@baseType': "ResourceSpecification"
+              '@type': "GeoJsonPoint"
+              bbox:
+              - 0.80082819046101150206595775671303272247314453125
+              - 0.80082819046101150206595775671303272247314453125
+              name: "name"
+              id: "id"
+              href: "href"
+              '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+            city: "city"
+            streetNr: "streetNr"
+            '@type': "@type"
+            locality: "locality"
+            postcode: "postcode"
+            streetNrLast: "streetNrLast"
+            streetNrSuffix: "streetNrSuffix"
+            streetName: "streetName"
+            stateOrProvince: "stateOrProvince"
+            '@baseType': "@baseType"
+            name: "name"
+            streetNrLastSuffix: "streetNrLastSuffix"
+            streetSuffix: "streetSuffix"
+            geographicSubAddress:
+            - subUnitNumber: "subUnitNumber"
+              '@type': "@type"
+              buildingName: "buildingName"
+              '@baseType': "@baseType"
+              levelType: "levelType"
+              subUnitType: "subUnitType"
+              levelNumber: "levelNumber"
+              name: "name"
+              subAddressType: "subAddressType"
+              id: "id"
+              href: "href"
+              privateStreetNumber: "privateStreetNumber"
+              '@schemaLocation': "http://example.com/aeiou"
+              privateStreetName: "privateStreetName"
+            - subUnitNumber: "subUnitNumber"
+              '@type': "@type"
+              buildingName: "buildingName"
+              '@baseType': "@baseType"
+              levelType: "levelType"
+              subUnitType: "subUnitType"
+              levelNumber: "levelNumber"
+              name: "name"
+              subAddressType: "subAddressType"
+              id: "id"
+              href: "href"
+              privateStreetNumber: "privateStreetNumber"
+              '@schemaLocation': "http://example.com/aeiou"
+              privateStreetName: "privateStreetName"
+            id: "id"
+            href: "href"
+            '@schemaLocation': "http://example.com/aeiou"
+          '@type': "@type"
+          validGeographicAddress:
+            country: "country"
+            streetType: "streetType"
+            geographicLocation:
+              '@referredType': "@referredType"
+              '@baseType': "ResourceSpecification"
+              '@type': "GeoJsonPoint"
+              bbox:
+              - 0.80082819046101150206595775671303272247314453125
+              - 0.80082819046101150206595775671303272247314453125
+              name: "name"
+              id: "id"
+              href: "href"
+              '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+            city: "city"
+            streetNr: "streetNr"
+            '@type': "@type"
+            locality: "locality"
+            postcode: "postcode"
+            streetNrLast: "streetNrLast"
+            streetNrSuffix: "streetNrSuffix"
+            streetName: "streetName"
+            stateOrProvince: "stateOrProvince"
+            '@baseType': "@baseType"
+            name: "name"
+            streetNrLastSuffix: "streetNrLastSuffix"
+            streetSuffix: "streetSuffix"
+            geographicSubAddress:
+            - subUnitNumber: "subUnitNumber"
+              '@type': "@type"
+              buildingName: "buildingName"
+              '@baseType': "@baseType"
+              levelType: "levelType"
+              subUnitType: "subUnitType"
+              levelNumber: "levelNumber"
+              name: "name"
+              subAddressType: "subAddressType"
+              id: "id"
+              href: "href"
+              privateStreetNumber: "privateStreetNumber"
+              '@schemaLocation': "http://example.com/aeiou"
+              privateStreetName: "privateStreetName"
+            - subUnitNumber: "subUnitNumber"
+              '@type': "@type"
+              buildingName: "buildingName"
+              '@baseType': "@baseType"
+              levelType: "levelType"
+              subUnitType: "subUnitType"
+              levelNumber: "levelNumber"
+              name: "name"
+              subAddressType: "subAddressType"
+              id: "id"
+              href: "href"
+              privateStreetNumber: "privateStreetNumber"
+              '@schemaLocation': "http://example.com/aeiou"
+              privateStreetName: "privateStreetName"
+            id: "id"
+            href: "href"
+            '@schemaLocation': "http://example.com/aeiou"
+          provideAlternative: true
+          submittedGeographicAddress:
+            country: "country"
+            streetType: "streetType"
+            geographicLocation:
+              '@referredType': "@referredType"
+              '@baseType': "ResourceSpecification"
+              '@type': "GeoJsonPoint"
+              bbox:
+              - 0.80082819046101150206595775671303272247314453125
+              - 0.80082819046101150206595775671303272247314453125
+              name: "name"
+              id: "id"
+              href: "href"
+              '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+            city: "city"
+            streetNr: "streetNr"
+            '@type': "@type"
+            locality: "locality"
+            postcode: "postcode"
+            streetNrLast: "streetNrLast"
+            streetNrSuffix: "streetNrSuffix"
+            streetName: "streetName"
+            stateOrProvince: "stateOrProvince"
+            '@baseType': "@baseType"
+            name: "name"
+            streetNrLastSuffix: "streetNrLastSuffix"
+            streetSuffix: "streetSuffix"
+            geographicSubAddress:
+            - subUnitNumber: "subUnitNumber"
+              '@type': "@type"
+              buildingName: "buildingName"
+              '@baseType': "@baseType"
+              levelType: "levelType"
+              subUnitType: "subUnitType"
+              levelNumber: "levelNumber"
+              name: "name"
+              subAddressType: "subAddressType"
+              id: "id"
+              href: "href"
+              privateStreetNumber: "privateStreetNumber"
+              '@schemaLocation': "http://example.com/aeiou"
+              privateStreetName: "privateStreetName"
+            - subUnitNumber: "subUnitNumber"
+              '@type': "@type"
+              buildingName: "buildingName"
+              '@baseType': "@baseType"
+              levelType: "levelType"
+              subUnitType: "subUnitType"
+              levelNumber: "levelNumber"
+              name: "name"
+              subAddressType: "subAddressType"
+              id: "id"
+              href: "href"
+              privateStreetNumber: "privateStreetNumber"
+              '@schemaLocation': "http://example.com/aeiou"
+              privateStreetName: "privateStreetName"
+            id: "id"
+            href: "href"
+            '@schemaLocation': "http://example.com/aeiou"
+          id: "id"
+          href: "href"
+          validationDate: "2000-01-23T04:56:07.000+00:00"
+          state: {}
+          '@schemaLocation': "http://example.com/aeiou"
+      title: "title"
+      priority: "priority"
+      timeOcurred: "2000-01-23T04:56:07.000+00:00"
+  GeographicAddressValidationStateChangeEventPayload:
+    type: "object"
+    properties:
+      geographicAddressValidation:
+        description: "The involved resource data for the event"
+        $ref: "#/definitions/GeographicAddressValidation"
+    description: "The event data structure"
+    example:
+      geographicAddressValidation:
+        validationResult: "validationResult"
+        '@baseType': "@baseType"
+        alternateGeographicAddress:
+        - country: "country"
+          streetType: "streetType"
+          geographicLocation:
+            '@referredType': "@referredType"
+            '@baseType': "ResourceSpecification"
+            '@type': "GeoJsonPoint"
+            bbox:
+            - 0.80082819046101150206595775671303272247314453125
+            - 0.80082819046101150206595775671303272247314453125
+            name: "name"
+            id: "id"
+            href: "href"
+            '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+          city: "city"
+          streetNr: "streetNr"
+          '@type': "@type"
+          locality: "locality"
+          postcode: "postcode"
+          streetNrLast: "streetNrLast"
+          streetNrSuffix: "streetNrSuffix"
+          streetName: "streetName"
+          stateOrProvince: "stateOrProvince"
+          '@baseType': "@baseType"
+          name: "name"
+          streetNrLastSuffix: "streetNrLastSuffix"
+          streetSuffix: "streetSuffix"
+          geographicSubAddress:
+          - subUnitNumber: "subUnitNumber"
+            '@type': "@type"
+            buildingName: "buildingName"
+            '@baseType': "@baseType"
+            levelType: "levelType"
+            subUnitType: "subUnitType"
+            levelNumber: "levelNumber"
+            name: "name"
+            subAddressType: "subAddressType"
+            id: "id"
+            href: "href"
+            privateStreetNumber: "privateStreetNumber"
+            '@schemaLocation': "http://example.com/aeiou"
+            privateStreetName: "privateStreetName"
+          - subUnitNumber: "subUnitNumber"
+            '@type': "@type"
+            buildingName: "buildingName"
+            '@baseType': "@baseType"
+            levelType: "levelType"
+            subUnitType: "subUnitType"
+            levelNumber: "levelNumber"
+            name: "name"
+            subAddressType: "subAddressType"
+            id: "id"
+            href: "href"
+            privateStreetNumber: "privateStreetNumber"
+            '@schemaLocation': "http://example.com/aeiou"
+            privateStreetName: "privateStreetName"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "http://example.com/aeiou"
+        - country: "country"
+          streetType: "streetType"
+          geographicLocation:
+            '@referredType': "@referredType"
+            '@baseType': "ResourceSpecification"
+            '@type': "GeoJsonPoint"
+            bbox:
+            - 0.80082819046101150206595775671303272247314453125
+            - 0.80082819046101150206595775671303272247314453125
+            name: "name"
+            id: "id"
+            href: "href"
+            '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+          city: "city"
+          streetNr: "streetNr"
+          '@type': "@type"
+          locality: "locality"
+          postcode: "postcode"
+          streetNrLast: "streetNrLast"
+          streetNrSuffix: "streetNrSuffix"
+          streetName: "streetName"
+          stateOrProvince: "stateOrProvince"
+          '@baseType': "@baseType"
+          name: "name"
+          streetNrLastSuffix: "streetNrLastSuffix"
+          streetSuffix: "streetSuffix"
+          geographicSubAddress:
+          - subUnitNumber: "subUnitNumber"
+            '@type': "@type"
+            buildingName: "buildingName"
+            '@baseType': "@baseType"
+            levelType: "levelType"
+            subUnitType: "subUnitType"
+            levelNumber: "levelNumber"
+            name: "name"
+            subAddressType: "subAddressType"
+            id: "id"
+            href: "href"
+            privateStreetNumber: "privateStreetNumber"
+            '@schemaLocation': "http://example.com/aeiou"
+            privateStreetName: "privateStreetName"
+          - subUnitNumber: "subUnitNumber"
+            '@type': "@type"
+            buildingName: "buildingName"
+            '@baseType': "@baseType"
+            levelType: "levelType"
+            subUnitType: "subUnitType"
+            levelNumber: "levelNumber"
+            name: "name"
+            subAddressType: "subAddressType"
+            id: "id"
+            href: "href"
+            privateStreetNumber: "privateStreetNumber"
+            '@schemaLocation': "http://example.com/aeiou"
+            privateStreetName: "privateStreetName"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "http://example.com/aeiou"
+        '@type': "@type"
+        validGeographicAddress:
+          country: "country"
+          streetType: "streetType"
+          geographicLocation:
+            '@referredType': "@referredType"
+            '@baseType': "ResourceSpecification"
+            '@type': "GeoJsonPoint"
+            bbox:
+            - 0.80082819046101150206595775671303272247314453125
+            - 0.80082819046101150206595775671303272247314453125
+            name: "name"
+            id: "id"
+            href: "href"
+            '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+          city: "city"
+          streetNr: "streetNr"
+          '@type': "@type"
+          locality: "locality"
+          postcode: "postcode"
+          streetNrLast: "streetNrLast"
+          streetNrSuffix: "streetNrSuffix"
+          streetName: "streetName"
+          stateOrProvince: "stateOrProvince"
+          '@baseType': "@baseType"
+          name: "name"
+          streetNrLastSuffix: "streetNrLastSuffix"
+          streetSuffix: "streetSuffix"
+          geographicSubAddress:
+          - subUnitNumber: "subUnitNumber"
+            '@type': "@type"
+            buildingName: "buildingName"
+            '@baseType': "@baseType"
+            levelType: "levelType"
+            subUnitType: "subUnitType"
+            levelNumber: "levelNumber"
+            name: "name"
+            subAddressType: "subAddressType"
+            id: "id"
+            href: "href"
+            privateStreetNumber: "privateStreetNumber"
+            '@schemaLocation': "http://example.com/aeiou"
+            privateStreetName: "privateStreetName"
+          - subUnitNumber: "subUnitNumber"
+            '@type': "@type"
+            buildingName: "buildingName"
+            '@baseType': "@baseType"
+            levelType: "levelType"
+            subUnitType: "subUnitType"
+            levelNumber: "levelNumber"
+            name: "name"
+            subAddressType: "subAddressType"
+            id: "id"
+            href: "href"
+            privateStreetNumber: "privateStreetNumber"
+            '@schemaLocation': "http://example.com/aeiou"
+            privateStreetName: "privateStreetName"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "http://example.com/aeiou"
+        provideAlternative: true
+        submittedGeographicAddress:
+          country: "country"
+          streetType: "streetType"
+          geographicLocation:
+            '@referredType': "@referredType"
+            '@baseType': "ResourceSpecification"
+            '@type': "GeoJsonPoint"
+            bbox:
+            - 0.80082819046101150206595775671303272247314453125
+            - 0.80082819046101150206595775671303272247314453125
+            name: "name"
+            id: "id"
+            href: "href"
+            '@schemaLocation': "https://mycsp.com:8080/tmf-api/schema/Resource/LogicalResourceSpecification.schema.json"
+          city: "city"
+          streetNr: "streetNr"
+          '@type': "@type"
+          locality: "locality"
+          postcode: "postcode"
+          streetNrLast: "streetNrLast"
+          streetNrSuffix: "streetNrSuffix"
+          streetName: "streetName"
+          stateOrProvince: "stateOrProvince"
+          '@baseType': "@baseType"
+          name: "name"
+          streetNrLastSuffix: "streetNrLastSuffix"
+          streetSuffix: "streetSuffix"
+          geographicSubAddress:
+          - subUnitNumber: "subUnitNumber"
+            '@type': "@type"
+            buildingName: "buildingName"
+            '@baseType': "@baseType"
+            levelType: "levelType"
+            subUnitType: "subUnitType"
+            levelNumber: "levelNumber"
+            name: "name"
+            subAddressType: "subAddressType"
+            id: "id"
+            href: "href"
+            privateStreetNumber: "privateStreetNumber"
+            '@schemaLocation': "http://example.com/aeiou"
+            privateStreetName: "privateStreetName"
+          - subUnitNumber: "subUnitNumber"
+            '@type': "@type"
+            buildingName: "buildingName"
+            '@baseType': "@baseType"
+            levelType: "levelType"
+            subUnitType: "subUnitType"
+            levelNumber: "levelNumber"
+            name: "name"
+            subAddressType: "subAddressType"
+            id: "id"
+            href: "href"
+            privateStreetNumber: "privateStreetNumber"
+            '@schemaLocation': "http://example.com/aeiou"
+            privateStreetName: "privateStreetName"
+          id: "id"
+          href: "href"
+          '@schemaLocation': "http://example.com/aeiou"
+        id: "id"
+        href: "href"
+        validationDate: "2000-01-23T04:56:07.000+00:00"
+        state: {}
+        '@schemaLocation': "http://example.com/aeiou"
+  GeoJsonLineString:
+    allOf:
+    - $ref: "#/definitions/GeographicLocation"
+    - type: "object"
+      properties:
+        geoJson:
+          $ref: "#/definitions/LineString"
+    description: "Container for GeoJson LineString: A collection of Points forming\
+      \ a connected line"
+  GeoJsonMultiLineString:
+    allOf:
+    - $ref: "#/definitions/GeographicLocation"
+    - type: "object"
+      properties:
+        geoJson:
+          $ref: "#/definitions/MultiLineString"
+    description: "A container for GeoJSON MultiLineString: A collection of distinct\
+      \ LineStrings"
+  GeoJsonMultiPoint:
+    allOf:
+    - $ref: "#/definitions/GeographicLocation"
+    - type: "object"
+      properties:
+        geoJson:
+          $ref: "#/definitions/MultiPoint"
+    description: "Container for GeoJSON MultiPoint: A collection of Points"
+  GeoJsonPoint:
+    allOf:
+    - $ref: "#/definitions/GeographicLocation"
+    - type: "object"
+      properties:
+        geoJson:
+          $ref: "#/definitions/Point"
+    description: "Container for a GeoJSON Point: A single position"
+  GeoJsonPolygon:
+    allOf:
+    - $ref: "#/definitions/GeographicLocation"
+    - type: "object"
+      properties:
+        geoJson:
+          $ref: "#/definitions/Polygon"
+    description: "Container for GeoJSON Polygon: An array of linear rings"
+  LineString:
+    type: "object"
+    required:
+    - "coordinates"
+    properties:
+      coordinates:
+        $ref: "#/definitions/lineString"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "GeoJSON: A collection of Points forming a connected line"
+  MultiLineString:
+    type: "object"
+    required:
+    - "coordinates"
+    - "type"
+    properties:
+      type:
+        type: "string"
+      coordinates:
+        type: "array"
+        items:
+          $ref: "#/definitions/lineString"
+        minItems: 1
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "A collection of distinct LineStrings"
+  MultiPoint:
+    type: "object"
+    required:
+    - "coordinates"
+    - "type"
+    properties:
+      type:
+        type: "string"
+      coordinates:
+        $ref: "#/definitions/positionArray"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "A collection of Points"
+  Point:
+    type: "object"
+    required:
+    - "coordinates"
+    - "type"
+    properties:
+      type:
+        type: "string"
+      coordinates:
+        $ref: "#/definitions/position"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "GeoJSON: A single position"
+  Polygon:
+    type: "object"
+    required:
+    - "coordinates"
+    - "type"
+    properties:
+      type:
+        type: "string"
+      coordinates:
+        $ref: "#/definitions/polygon"
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class"
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name"
+    description: "An array of linear rings"
+  position:
+    type: "array"
+    description: "GeoJSON: A single position"
+    items:
+      type: "number"
+    minItems: 2
+    maxItems: 2
+  positionArray:
+    type: "array"
+    description: "GeoJSON: An array of positions"
+    items:
+      $ref: "#/definitions/position"
+  lineString:
+    allOf:
+    - $ref: "#/definitions/positionArray"
+    - {}
+    description: "GeoJSON: An array of two or more positions"
+  linearRing:
+    allOf:
+    - $ref: "#/definitions/positionArray"
+    - {}
+    description: "GeoJSON: An array of four positions where the first equals the last"
+  polygon:
+    type: "array"
+    description: "GeoJSON: An array of linear rings"
+    items:
+      $ref: "#/definitions/linearRing"
+  Error:
+    type: "object"
+    required:
+    - "code"
+    - "reason"
+    properties:
+      code:
+        type: "string"
+        description: "Application relevant detail, defined in the API or a common\
+          \ list."
+      reason:
+        type: "string"
+        description: "Explanation of the reason for the error which can be shown to\
+          \ a client user."
+      message:
+        type: "string"
+        description: "More details and corrective actions related to the error which\
+          \ can be shown to a client user."
+      status:
+        type: "string"
+        description: "HTTP Error code extension"
+      referenceError:
+        type: "string"
+        format: "uri"
+        description: "URI of documentation describing the error."
+      '@baseType':
+        type: "string"
+        description: "When sub-classing, this defines the super-class."
+      '@schemaLocation':
+        type: "string"
+        format: "uri"
+        description: "A URI to a JSON-Schema file that defines additional attributes\
+          \ and relationships"
+      '@type':
+        type: "string"
+        description: "When sub-classing, this defines the sub-class entity name."
+    description: "Used when an API throws an Error, typically with a HTTP error response-code\
+      \ (3xx, 4xx, 5xx)"

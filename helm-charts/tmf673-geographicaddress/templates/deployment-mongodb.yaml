@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mongodb
+  labels:
+    app: {{ .Release.Name }}-mongodb
+    oda.tmforum.org/componentName: {{ .Values.component.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-mongodb
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-mongodb
+        oda.tmforum.org/componentName: {{ .Values.component.name }}
+    spec:
+      containers:
+      - name: mongodb
+        image: "{{ .Values.mongodb.image.repository }}:{{ .Values.mongodb.image.tag }}"
+        imagePullPolicy: {{ .Values.mongodb.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.mongodb.service.port }}
+          name: mongodb
+          protocol: TCP
+        volumeMounts:
+        - name: mongodb-data
+          mountPath: /data/db
+        resources:
+          {{- toYaml .Values.mongodb.resources | nindent 10 }}
+        {{- if .Values.mongodb.startupProbe.enabled }}
+        startupProbe:
+          tcpSocket:
+            port: mongodb
+          initialDelaySeconds: {{ .Values.mongodb.startupProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.mongodb.startupProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.mongodb.startupProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.mongodb.startupProbe.failureThreshold }}
+        {{- end }}
+        livenessProbe:
+          tcpSocket:
+            port: mongodb
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: mongodb
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: mongodb-data
+        {{- if .Values.mongodb.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-mongodb-pvc
+        {{- else }}
+        emptyDir: {}
+        {{- end }}

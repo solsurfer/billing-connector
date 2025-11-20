@@ -1,0 +1,19 @@
+{
+  "_comment": "For cloud deployment, set environment variables:",
+  "_mongodb_atlas": "MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/tmf",
+  "_railway_render": "MONGODB_URI or MONGO_URL or DB_URL",
+  "_kubernetes": "MONGO_URL is set automatically by Helm chart",
+  "_docker_compose": "MONGO_URL=mongodb://mongodb:27017",
+
+  "db_prot": "mongodb",
+  "db_user": "mongodb",
+  "db_password": "mongodb",
+  "db_host": "localhost",
+  "db_port": 27017,
+  "db_name": "tmf",
+
+  "alarm_host": "http://localhost:10011",
+  "alarm_url_hal": "/api/",
+
+  "strict_schema": true
+}
