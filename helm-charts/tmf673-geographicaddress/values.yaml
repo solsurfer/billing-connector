@@ -23,16 +23,26 @@ geographicaddress:
 
   resources:
     limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 250m
+      cpu: 200m
       memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
 
   replicas: 1
 
 # MongoDB configuration
 mongodb:
+  # Set to false to use an existing MongoDB instance
+  enabled: false
+
+  # Existing MongoDB service configuration (used when enabled: false)
+  existingService:
+    name: r1-mongodb
+    port: 27017
+    database: tmf
+
+  # MongoDB deployment settings (only used when enabled: true)
   image:
     repository: mongo
     tag: "8.0"
@@ -49,11 +59,11 @@ mongodb:
 
   resources:
     limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 250m
+      cpu: 300m
       memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
   startupProbe:
     enabled: true

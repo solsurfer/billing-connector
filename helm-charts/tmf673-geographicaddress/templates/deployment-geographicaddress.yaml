@@ -32,7 +32,11 @@ spec:
         - name: RELEASE_NAME
           value: {{ .Release.Name }}
         - name: MONGO_URL
-          value: "mongodb://{{ .Release.Name }}-mongodb:27017/tmf"
+          {{- if .Values.mongodb.enabled }}
+          value: "mongodb://{{ .Release.Name }}-mongodb:{{ .Values.mongodb.service.port }}/{{ .Values.mongodb.existingService.database }}"
+          {{- else }}
+          value: "mongodb://{{ .Values.mongodb.existingService.name }}:{{ .Values.mongodb.existingService.port }}/{{ .Values.mongodb.existingService.database }}"
+          {{- end }}
         resources:
           {{- toYaml .Values.geographicaddress.resources | nindent 10 }}
         livenessProbe:
