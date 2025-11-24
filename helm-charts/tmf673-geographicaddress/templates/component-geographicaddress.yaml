@@ -20,8 +20,7 @@ spec:
       - name: geographicaddressmanagement
         apiType: openapi
         specification:
-          - url: "https://raw.githubusercontent.com/tmforum-apis/TMF673_GeographicAddress/master/TMF673-GeographicAddress-v4.0.0.swagger.json"
-            version: "v4.0.0"
+          - "https://raw.githubusercontent.com/tmforum-apis/TMF673_GeographicAddress/master/TMF673-GeographicAddress-v4.0.0.swagger.json"
         implementation: {{ .Release.Name }}-geographicaddress
         path: /tmf-api/geographicAddressManagement/v4
         developerUI: /tmf-api/geographicAddressManagement/v4/docs
@@ -31,11 +30,11 @@ spec:
   eventNotification:
     publishedEvents:
       - name: GeographicAddressValidationCreateEvent
-        href: /tmf-api/geographicAddressManagement/v4/hub
+        hub: /tmf-api/geographicAddressManagement/v4/hub
       - name: GeographicAddressValidationStateChangeEvent
-        href: /tmf-api/geographicAddressManagement/v4/hub
+        hub: /tmf-api/geographicAddressManagement/v4/hub
       - name: GeographicAddressValidationDeleteEvent
-        href: /tmf-api/geographicAddressManagement/v4/hub
+        hub: /tmf-api/geographicAddressManagement/v4/hub
     subscribedEvents: []
 
   managementFunction:
