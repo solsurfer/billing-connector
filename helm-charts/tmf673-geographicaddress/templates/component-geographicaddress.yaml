@@ -18,54 +18,28 @@ spec:
   coreFunction:
     exposedAPIs:
       - name: geographicaddressmanagement
-        id: TMF673
-        version: 4
-        specification: "https://raw.githubusercontent.com/tmforum-apis/TMF673_GeographicAddress/master/TMF673-GeographicAddress-v4.0.0.swagger.json"
+        apiType: openapi
+        specification:
+          - url: "https://raw.githubusercontent.com/tmforum-apis/TMF673_GeographicAddress/master/TMF673-GeographicAddress-v4.0.0.swagger.json"
+            version: "v4.0.0"
         implementation: {{ .Release.Name }}-geographicaddress
         path: /tmf-api/geographicAddressManagement/v4
         developerUI: /tmf-api/geographicAddressManagement/v4/docs
         port: {{ .Values.geographicaddress.service.port }}
-        resources:
-          - geographicAddress:
-              - GET /geographicAddress
-              - GET /geographicAddress/{id}
-          - geographicSubAddress:
-              - GET /geographicSubAddress
-          - geographicAddressValidation:
-              - GET /geographicAddressValidation
-              - GET /geographicAddressValidation/{id}
-              - POST /geographicAddressValidation
-              - PATCH /geographicAddressValidation/{id}
-              - DELETE /geographicAddressValidation/{id}
     dependentAPIs: []
 
   eventNotification:
     publishedEvents:
       - name: GeographicAddressValidationCreateEvent
-        specification: "https://raw.githubusercontent.com/tmforum-apis/TMF673_GeographicAddress/master/TMF673-GeographicAddress-v4.0.0.swagger.json"
-        hub: /tmf-api/geographicAddressManagement/v4/hub
-        implementation: {{ .Release.Name }}-geographicaddress
-        port: {{ .Values.geographicaddress.service.port }}
+        href: /tmf-api/geographicAddressManagement/v4/hub
       - name: GeographicAddressValidationStateChangeEvent
-        specification: "https://raw.githubusercontent.com/tmforum-apis/TMF673_GeographicAddress/master/TMF673-GeographicAddress-v4.0.0.swagger.json"
-        hub: /tmf-api/geographicAddressManagement/v4/hub
-        implementation: {{ .Release.Name }}-geographicaddress
-        port: {{ .Values.geographicaddress.service.port }}
+        href: /tmf-api/geographicAddressManagement/v4/hub
       - name: GeographicAddressValidationDeleteEvent
-        specification: "https://raw.githubusercontent.com/tmforum-apis/TMF673_GeographicAddress/master/TMF673-GeographicAddress-v4.0.0.swagger.json"
-        hub: /tmf-api/geographicAddressManagement/v4/hub
-        implementation: {{ .Release.Name }}-geographicaddress
-        port: {{ .Values.geographicaddress.service.port }}
+        href: /tmf-api/geographicAddressManagement/v4/hub
     subscribedEvents: []
 
   managementFunction:
-    exposedAPIs:
-      - name: metrics
-        id: prometheus
-        version: 1
-        implementation: {{ .Release.Name }}-geographicaddress
-        path: /metrics
-        port: {{ .Values.geographicaddress.service.port }}
+    exposedAPIs: []
 
   securityFunction:
     controllerRole: {{ .Values.oda.canvas.role }}
